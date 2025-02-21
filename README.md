@@ -37,9 +37,7 @@ pip install -r requirements.txt
 
 # 📖 Usage
 
-##Run the application:
-
-python serial_command_sender.py
+Run the application: python serial_command_sender.py
 
 Loading and Sending Commands
 
