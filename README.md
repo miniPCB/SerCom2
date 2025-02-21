@@ -25,7 +25,8 @@ UI-Freezing Prevention with Background Threads
 Ensure you have Python 3.8+ installed. Then, run the following commands:
 
 ## Clone this repository
-git clone https://github.com/YOUR_USERNAME/SerialCommandSender.git
+git clone https://github.com/miniPCB/SerialCommandSender.git
+
 cd SerialCommandSender
 
 ## Create a virtual environment (optional but recommended)
