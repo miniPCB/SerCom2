@@ -74,16 +74,22 @@ class SerialCommandSender(QMainWindow):
         self.command_list.itemSelectionChanged.connect(self.enable_buttons)
         bottom_layout.addWidget(self.command_list)
 
+        button_layout = QHBoxLayout()
         self.step_button = QPushButton("Send Selected Command")
         self.step_button.setEnabled(False)
         self.step_button.clicked.connect(self.send_selected_command)
-        bottom_layout.addWidget(self.step_button)
+        button_layout.addWidget(self.step_button)
 
         self.fire_all_button = QPushButton("Send All Commands")
         self.fire_all_button.setEnabled(False)
         self.fire_all_button.clicked.connect(self.send_all_commands)
-        bottom_layout.addWidget(self.fire_all_button)
+        button_layout.addWidget(self.fire_all_button)
 
+        self.clear_selection_button = QPushButton("Clear Selection")
+        self.clear_selection_button.clicked.connect(self.clear_selection)
+        button_layout.addWidget(self.clear_selection_button)
+        bottom_layout.addLayout(button_layout)
+        
         self.response_area = QTextEdit()
         self.response_area.setReadOnly(True)
         bottom_layout.addWidget(self.response_area)
@@ -131,6 +137,11 @@ class SerialCommandSender(QMainWindow):
                 self.log_data.append({"timestamp": self.timestamp(), "command": command, "response": response})
             except Exception as e:
                 self.response_area.append(f"Error sending command: {e}\n")
+
+    def clear_selection(self):
+        """Clears the selection of commands."""
+        self.command_list.clearSelection()
+        self.enable_buttons()  # Refresh button states
 
     def toggle_connection(self):
         if self.serial_connection and self.serial_connection.is_open:
