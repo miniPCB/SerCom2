@@ -166,6 +166,10 @@ class SerialCommandSender(QMainWindow):
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def update_status_label(self, connected):
+        if not hasattr(self, 'log_data'):  # Ensure log_data exists before using it
+            self.log_data = []
+        event = "Connected to Serial Port" if connected else "Disconnected from Serial Port"
+        self.log_data.append({"timestamp": self.timestamp(), "event": event})
         self.com_port_combo.setDisabled(connected)
         self.baud_rate_combo.setDisabled(connected)
         if connected:
