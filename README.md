@@ -61,11 +61,17 @@ Click "Save Log" to store responses.
 ## JSON Command File
 
 {
+
   "commands": [
+
     "COMMAND_1",
+
     "COMMAND_2",
+
     "COMMAND_3"
+
   ]
+  
 }
 
 ## Text Command File (Each line is a command)
