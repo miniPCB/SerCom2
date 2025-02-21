@@ -191,6 +191,7 @@ class SerialCommandSender(QMainWindow):
                     self.command_list.clear()
                     self.command_list.addItems(self.commands)
                     self.response_area.append(f"[{self.timestamp()}] Loaded {len(self.commands)} commands from {file_path}\n")
+                    self.log_data.append({"timestamp": self.timestamp(), "event": f"Loaded: {file_path}"})
                     if self.commands:
                         self.fire_all_button.setEnabled(True)
             except Exception as e:
