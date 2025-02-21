@@ -5,6 +5,7 @@ import json
 import serial
 import serial.tools.list_ports
 import datetime
+import time
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QComboBox, QLabel, QTextEdit, QFileDialog, QVBoxLayout, QHBoxLayout, QWidget, QListWidget, QAbstractItemView
 )
@@ -44,6 +45,10 @@ class SerialCommandSender(QMainWindow):
         self.com_port_combo = QComboBox()
         self.refresh_com_ports()
         top_layout.addWidget(self.com_port_combo)
+
+        self.com_port_refresh_timer = QTimer()
+        self.com_port_refresh_timer.timeout.connect(self.refresh_com_ports)
+        self.com_port_refresh_timer.start(3000)  # Refresh every 3 seconds
 
         self.baud_label = QLabel("Select Baud Rate:")
         top_layout.addWidget(self.baud_label)
@@ -130,11 +135,13 @@ class SerialCommandSender(QMainWindow):
         if not self.serial_connection:
             self.open_serial_connection()
         if self.serial_connection and self.serial_connection.is_open:
+            start_time = time.time()  # Start timing
             try:
                 self.serial_connection.write((command + "\r\n").encode())
                 response = self.serial_connection.read(self.serial_connection.in_waiting).decode().strip()
-                self.response_area.append(f"[{self.timestamp()}] > {command}\nResponse: {response}\n")
-                self.log_data.append({"timestamp": self.timestamp(), "command": command, "response": response})
+                elapsed_time = time.time() - start_time  # Calculate elapsed time
+                self.response_area.append(f"[{self.timestamp()}] > {command} (Took {elapsed_time:.3f} sec)\nResponse: {response}\n")
+                self.log_data.append({"timestamp": self.timestamp(), "command": command, "response": response, "time": elapsed_time})
             except Exception as e:
                 self.response_area.append(f"Error sending command: {e}\n")
 
