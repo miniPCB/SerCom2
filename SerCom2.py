@@ -197,9 +197,9 @@ class SerialCommandSender(QMainWindow):
                 self.response_area.append(f"[{self.timestamp()}] Error loading JSON: {e}\n")
 
     def enable_buttons(self):
-        """Enable the send button when a command is selected."""
-        self.step_button.setEnabled(bool(self.command_list.selectedItems()))
-
+        """Enable the send button when at least one command is selected."""
+        self.step_button.setEnabled(len(self.command_list.selectedItems()) > 0)
+        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = SerialCommandSender()
