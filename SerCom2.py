@@ -6,7 +6,7 @@ import serial
 import serial.tools.list_ports
 import datetime
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QPushButton, QComboBox, QLabel, QTextEdit, QFileDialog, QVBoxLayout, QHBoxLayout, QWidget, QListWidget
+    QApplication, QMainWindow, QPushButton, QComboBox, QLabel, QTextEdit, QFileDialog, QVBoxLayout, QHBoxLayout, QWidget, QListWidget, QAbstractItemView
 )
 from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import QTimer
@@ -61,11 +61,12 @@ class SerialCommandSender(QMainWindow):
         self.update_status_label(False)
         top_layout.addWidget(self.connection_status)
 
-        self.load_json_button = QPushButton("Load JSON Commands")
+        self.load_json_button = QPushButton("Load Commands")
         self.load_json_button.clicked.connect(self.load_json)
         top_layout.addWidget(self.load_json_button)
 
         self.command_list = QListWidget()
+        self.command_list.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         self.command_list.itemSelectionChanged.connect(self.enable_buttons)
         bottom_layout.addWidget(self.command_list)
 
@@ -108,7 +109,8 @@ class SerialCommandSender(QMainWindow):
     def send_selected_command(self):
         selected_items = self.command_list.selectedItems()
         if selected_items:
-            self.send_command(selected_items[0].text())
+            for item in selected_items:
+                self.send_command(item.text())
 
     def send_all_commands(self):
         for command in self.commands:
@@ -197,7 +199,6 @@ class SerialCommandSender(QMainWindow):
     def enable_buttons(self):
         """Enable the send button when a command is selected."""
         self.step_button.setEnabled(bool(self.command_list.selectedItems()))
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
