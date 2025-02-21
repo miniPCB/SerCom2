@@ -61,9 +61,13 @@ class SerialCommandSender(QMainWindow):
         self.update_status_label(False)
         top_layout.addWidget(self.connection_status)
 
-        self.load_json_button = QPushButton("Load Commands")
+        self.load_json_button = QPushButton("Load JSON Commands")
         self.load_json_button.clicked.connect(self.load_json)
         top_layout.addWidget(self.load_json_button)
+
+        self.load_text_button = QPushButton("Load Text Commands")
+        self.load_text_button.clicked.connect(self.load_text)
+        top_layout.addWidget(self.load_text_button)
 
         self.command_list = QListWidget()
         self.command_list.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
@@ -191,11 +195,26 @@ class SerialCommandSender(QMainWindow):
                     self.command_list.clear()
                     self.command_list.addItems(self.commands)
                     self.response_area.append(f"[{self.timestamp()}] Loaded {len(self.commands)} commands from {file_path}\n")
-                    self.log_data.append({"timestamp": self.timestamp(), "event": f"Loaded: {file_path}"})
+                    self.log_data.append({"timestamp": self.timestamp(), "event": f"Loaded JSON file: {file_path}"})
                     if self.commands:
                         self.fire_all_button.setEnabled(True)
             except Exception as e:
                 self.response_area.append(f"[{self.timestamp()}] Error loading JSON: {e}\n")
+
+    def load_text(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, "Open Text File", "", "Text Files (*.txt)")
+        if file_path:
+            try:
+                with open(file_path, "r") as file:
+                    self.commands = [line.strip() for line in file.readlines() if line.strip()]
+                    self.command_list.clear()
+                    self.command_list.addItems(self.commands)
+                    self.response_area.append(f"[{self.timestamp()}] Loaded {len(self.commands)} commands from {file_path}\n")
+                    self.log_data.append({"timestamp": self.timestamp(), "event": f"Loaded text file: {file_path}"})
+                    if self.commands:
+                        self.fire_all_button.setEnabled(True)
+            except Exception as e:
+                self.response_area.append(f"[{self.timestamp()}] Error loading text file: {e}\n")
 
     def enable_buttons(self):
         """Enable the send button when at least one command is selected."""
