@@ -1,64 +1,74 @@
 [
     {
-        "timestamp": "2025-02-21 14:13:47",
+        "timestamp": "2025-02-21 14:16:38",
         "event": "Connected to Serial Port"
     },
     {
-        "timestamp": "2025-02-21 14:13:49",
+        "timestamp": "2025-02-21 14:16:41",
         "event": "Loaded: C:/Repos/SerCom2/serial_commands.json"
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "ATI",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+VERSION",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+RESET",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+UART?",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+BAUD1",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+NAME?",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+ADDR?",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+ROLE?",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:50",
+        "timestamp": "2025-02-21 14:16:44",
         "command": "AT+RESET",
         "response": ""
     },
     {
-        "timestamp": "2025-02-21 14:13:52",
-        "event": "Disconnected from Serial Port"
+        "timestamp": "2025-02-21 14:16:47",
+        "event": "Loaded: C:/Repos/SerCom2/serial_commands copy.json"
+    },
+    {
+        "timestamp": "2025-02-21 14:16:49",
+        "command": "AT",
+        "response": ""
+    },
+    {
+        "timestamp": "2025-02-21 14:16:49",
+        "command": "ATI",
+        "response": ""
     }
 ]
