@@ -206,7 +206,7 @@ class SerialCommandSender(QMainWindow):
         if file_path:
             try:
                 with open(file_path, "r") as file:
-                    self.commands = [line.strip() for line in file.readlines() if line.strip()]
+                    self.commands = [line.strip() for line in file.readlines() if line.strip() and not line.strip().startswith(('#', '//'))]
                     self.command_list.clear()
                     self.command_list.addItems(self.commands)
                     self.response_area.append(f"[{self.timestamp()}] Loaded {len(self.commands)} commands from {file_path}\n")
