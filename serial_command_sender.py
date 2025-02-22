@@ -1,11 +1,14 @@
 import sys
 import subprocess
 import importlib
+import platform
+import shutil
 import json
 import serial
 import serial.tools.list_ports
 import datetime
 import time
+
 # Function to install packages if missing
 def install_and_import(package, import_name=None):
     if import_name is None:
@@ -14,8 +17,22 @@ def install_and_import(package, import_name=None):
         module = importlib.import_module(import_name)
     except ImportError:
         print(f"⚠ {package} not found. Installing...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+        # Check if running on Raspberry Pi
+        if shutil.which("apt") and "raspberrypi" in platform.uname().release:
+            try:
+                subprocess.check_call(["sudo", "apt", "install", "-y", f"python3-{package.lower()}"])
+                module = importlib.import_module(import_name)
+            except subprocess.CalledProcessError:
+                print(f"⚠ Failed to install {package} via apt. Trying pip instead...")
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        else:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        
+        # Import the module again after installation
         module = importlib.import_module(import_name)
+
+    # Store module in global namespace
     globals()[import_name] = module
 
 # Install required packages
