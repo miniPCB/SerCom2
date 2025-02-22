@@ -46,6 +46,16 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import QTimer
 
+class RefreshableComboBox(QComboBox):
+    def __init__(self, main_window):
+        super().__init__()
+        self.main_window = main_window  # Store reference to main window
+
+    def showPopup(self):
+        """Refresh COM port list only when the dropdown is clicked."""
+        self.main_window.refresh_com_ports()  # Use main window's method
+        super().showPopup()
+    
 class SerialCommandSender(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -59,13 +69,9 @@ class SerialCommandSender(QMainWindow):
         self.port_label = QLabel("Select COM Port:")
         top_layout.addWidget(self.port_label)
         
-        self.com_port_combo = QComboBox()
-        self.refresh_com_ports()
+        self.com_port_combo = RefreshableComboBox(self)
         top_layout.addWidget(self.com_port_combo)
-
-        self.com_port_refresh_timer = QTimer()
-        self.com_port_refresh_timer.timeout.connect(self.refresh_com_ports)
-        self.com_port_refresh_timer.start(3000)  # Refresh every 3 seconds
+        self.refresh_com_ports()
 
         self.baud_label = QLabel("Select Baud Rate:")
         top_layout.addWidget(self.baud_label)
@@ -134,9 +140,15 @@ class SerialCommandSender(QMainWindow):
         self.check_connection_timer.timeout.connect(self.check_connection)
 
     def refresh_com_ports(self):
-        self.com_port_combo.clear()
         ports = [port.device for port in serial.tools.list_ports.comports()]
-        self.com_port_combo.addItems(ports if ports else ["No COM Ports Found"])
+        self.com_port_combo.clear()
+        if not ports:
+            self.com_port_combo.addItem("No COM Ports Found")
+        else:
+            self.com_port_combo.addItems(ports)
+            # Select the first available port automatically
+            if self.com_port_combo.currentIndex() == -1:
+                self.com_port_combo.setCurrentIndex(0)
 
     def send_selected_command(self):
         selected_items = self.command_list.selectedItems()
@@ -178,7 +190,14 @@ class SerialCommandSender(QMainWindow):
 
     def open_serial_connection(self):
         port = self.com_port_combo.currentText()
+        
+        # Validate port selection
+        if not port or port == "No COM Ports Found":
+            self.response_area.append(f"[{self.timestamp()}] ⚠ No valid COM port selected.\n")
+            return
+        
         baud_rate = int(self.baud_rate_combo.currentText())
+        
         try:
             self.serial_connection = serial.Serial(port, baud_rate, timeout=1)
             self.update_status_label(True)
@@ -186,7 +205,7 @@ class SerialCommandSender(QMainWindow):
             self.check_connection_timer.start(1000)
         except Exception as e:
             self.update_status_label(False)
-            self.response_area.append(f"Error opening serial connection: {e}\n")
+            self.response_area.append(f"[{self.timestamp()}] ❌ Error opening serial connection: {e}\n")
 
     def check_connection(self):
         if self.serial_connection and not self.serial_connection.is_open:
