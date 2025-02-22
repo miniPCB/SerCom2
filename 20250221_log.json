@@ -1,174 +1,70 @@
 [
     {
-        "timestamp": "2025-02-21 17:17:40",
+        "timestamp": "2025-02-21 21:12:37",
         "event": "Connected to Serial Port"
     },
     {
-        "timestamp": "2025-02-21 17:17:45",
-        "event": "Loaded JSON file: C:/Repos/SerCom2/serial_commands.json"
-    },
-    {
-        "timestamp": "2025-02-21 17:17:48",
+        "timestamp": "2025-02-21 21:12:47",
         "event": "Loaded text file: C:/Repos/SerCom2/commands.txt"
     },
     {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+RESET",
-        "response": "",
-        "time": 0.00034332275390625
-    },
-    {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+UART?",
-        "response": "",
-        "time": 0.0004096031188964844
-    },
-    {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+BAUD1",
-        "response": "",
-        "time": 0.00038909912109375
-    },
-    {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+NAME?",
-        "response": "",
-        "time": 0.0002837181091308594
-    },
-    {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+ADDR?",
-        "response": "",
-        "time": 0.0002827644348144531
-    },
-    {
-        "timestamp": "2025-02-21 17:17:57",
-        "command": "AT+ROLE?",
-        "response": "",
-        "time": 0.00026702880859375
-    },
-    {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT",
         "response": "",
-        "time": 0.0003204345703125
+        "time": 0.00047707557678222656
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "ATI",
         "response": "",
-        "time": 0.00029659271240234375
+        "time": 0.00044608116149902344
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+VERSION",
         "response": "",
-        "time": 0.0002722740173339844
+        "time": 0.0004379749298095703
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+RESET",
         "response": "",
-        "time": 0.0003771781921386719
+        "time": 0.0004062652587890625
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+UART?",
         "response": "",
-        "time": 0.00028133392333984375
+        "time": 0.0007159709930419922
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+BAUD1",
         "response": "",
-        "time": 0.0003764629364013672
+        "time": 0.0004951953887939453
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+NAME?",
         "response": "",
-        "time": 0.00028586387634277344
+        "time": 0.00040340423583984375
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+ADDR?",
         "response": "",
-        "time": 0.0002875328063964844
+        "time": 0.00044608116149902344
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+ROLE?",
         "response": "",
-        "time": 0.00027489662170410156
+        "time": 0.0004363059997558594
     },
     {
-        "timestamp": "2025-02-21 17:18:08",
+        "timestamp": "2025-02-21 21:12:55",
         "command": "AT+RESET",
         "response": "",
-        "time": 0.000202178955078125
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT",
-        "response": "",
-        "time": 0.0001933574676513672
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "ATI",
-        "response": "",
-        "time": 0.00031280517578125
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+VERSION",
-        "response": "",
-        "time": 0.00027561187744140625
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+RESET",
-        "response": "",
-        "time": 0.0003781318664550781
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+UART?",
-        "response": "",
-        "time": 0.0003058910369873047
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+BAUD1",
-        "response": "",
-        "time": 0.0002720355987548828
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+NAME?",
-        "response": "",
-        "time": 0.0003762245178222656
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+ADDR?",
-        "response": "",
-        "time": 0.00026726722717285156
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+ROLE?",
-        "response": "",
-        "time": 0.00032401084899902344
-    },
-    {
-        "timestamp": "2025-02-21 17:18:14",
-        "command": "AT+RESET",
-        "response": "",
-        "time": 0.0003535747528076172
-    },
-    {
-        "timestamp": "2025-02-21 17:18:23",
-        "event": "Disconnected from Serial Port"
+        "time": 0.0003044605255126953
     }
 ]

@@ -6,12 +6,6 @@ import serial
 import serial.tools.list_ports
 import datetime
 import time
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QPushButton, QComboBox, QLabel, QTextEdit, QFileDialog, QVBoxLayout, QHBoxLayout, QWidget, QListWidget, QAbstractItemView
-)
-from PyQt6.QtGui import QPalette, QColor
-from PyQt6.QtCore import QTimer
-
 # Function to install packages if missing
 def install_and_import(package, import_name=None):
     if import_name is None:
@@ -28,6 +22,12 @@ def install_and_import(package, import_name=None):
 required_packages = [("pyserial", "serial"), ("PyQt6", None)]
 for package, import_name in required_packages:
     install_and_import(package, import_name)
+
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QPushButton, QComboBox, QLabel, QTextEdit, QFileDialog, QVBoxLayout, QHBoxLayout, QWidget, QListWidget, QAbstractItemView
+)
+from PyQt6.QtGui import QPalette, QColor
+from PyQt6.QtCore import QTimer
 
 class SerialCommandSender(QMainWindow):
     def __init__(self):
