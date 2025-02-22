@@ -18,7 +18,7 @@ Save Logs as JSON
 
 ## 🛠️ Installation
 
-Ensure you have Python 3.8+ installed. Then, run the following commands:
+Ensure you have Python 3.8+ installed.
 
 ## Clone this repository
 git clone https://github.com/miniPCB/SerialCommandSender.git
@@ -28,9 +28,6 @@ cd SerialCommandSender
 ## Create a virtual environment (optional but recommended)
 python -m venv venv
 source venv/bin/activate  # On Windows, use: venv\Scripts\activate
-
-## Install dependencies
-pip install -r requirements.txt
 
 # 📖 Usage
 
