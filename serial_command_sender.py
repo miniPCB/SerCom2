@@ -62,6 +62,10 @@ class SerialCommandSender(QMainWindow):
         self.setWindowTitle("Serial Command Sender")
         self.setGeometry(100, 100, 800, 600)
 
+        self.echo_enabled = False  # Default: Echo is OFF
+        self.serial_read_timer = QTimer()
+        self.serial_read_timer.timeout.connect(self.read_and_echo_serial)
+
         main_layout = QVBoxLayout()
         top_layout = QHBoxLayout()
         bottom_layout = QVBoxLayout()
@@ -126,6 +130,10 @@ class SerialCommandSender(QMainWindow):
         self.save_log_button.clicked.connect(self.save_log)
         bottom_layout.addWidget(self.save_log_button)
 
+        self.echo_button = QPushButton("Echo Data: OFF")
+        self.echo_button.clicked.connect(self.toggle_echo)
+        button_layout.addWidget(self.echo_button)
+
         main_layout.addLayout(top_layout)
         main_layout.addLayout(bottom_layout)
         
@@ -138,6 +146,35 @@ class SerialCommandSender(QMainWindow):
         self.log_data = []
         self.check_connection_timer = QTimer()
         self.check_connection_timer.timeout.connect(self.check_connection)
+
+    def toggle_echo(self):
+        """Toggles the echo mode on/off."""
+        self.echo_enabled = not self.echo_enabled
+        status = "ON" if self.echo_enabled else "OFF"
+        self.echo_button.setText(f"Echo Data: {status}")
+        self.response_area.append(f"[{self.timestamp()}] Echo Mode: {status}\n")
+
+    def read_and_echo_serial(self):
+        """Reads incoming serial data and echoes it back if echo is enabled."""
+        if not self.serial_connection or not self.serial_connection.is_open:
+            self.serial_read_timer.stop()  # 🔹 Stop timer if connection is lost
+            return
+
+        try:
+            if self.serial_connection.in_waiting > 0:  # 🔹 Only read when data is available
+                received_data = self.serial_connection.read(self.serial_connection.in_waiting).decode(errors='ignore').strip()
+                
+                if received_data:
+                    # Display received data in the UI
+                    self.response_area.append(f"[{self.timestamp()}] Received: {received_data}")
+
+                    # Echo data back only if echo mode is enabled
+                    if self.echo_enabled:
+                        self.serial_connection.write((received_data + "\r\n").encode())
+                        self.response_area.append(f"[{self.timestamp()}] Echoed: {received_data}")
+
+        except Exception as e:
+            self.response_area.append(f"[{self.timestamp()}] ❌ Error reading serial data: {e}\n")
 
     def refresh_com_ports(self):
         ports = [port.device for port in serial.tools.list_ports.comports()]
@@ -185,13 +222,19 @@ class SerialCommandSender(QMainWindow):
             self.update_status_label(False)
             self.connect_button.setText("Connect")
             self.check_connection_timer.stop()
+
+            # 🔹 Ensure serial_read_timer stops properly
+            if self.serial_read_timer.isActive():
+                self.serial_read_timer.stop()
+            
+            self.serial_connection = None  # Set to None to indicate no active connection
+
         else:
             self.open_serial_connection()
 
     def open_serial_connection(self):
         port = self.com_port_combo.currentText()
         
-        # Validate port selection
         if not port or port == "No COM Ports Found":
             self.response_area.append(f"[{self.timestamp()}] ⚠ No valid COM port selected.\n")
             return
@@ -203,6 +246,11 @@ class SerialCommandSender(QMainWindow):
             self.update_status_label(True)
             self.connect_button.setText("Disconnect")
             self.check_connection_timer.start(1000)
+
+            # 🔹 Start polling for incoming data only if not already running
+            if not self.serial_read_timer.isActive():
+                self.serial_read_timer.start(100)  # Polling interval: 100ms
+
         except Exception as e:
             self.update_status_label(False)
             self.response_area.append(f"[{self.timestamp()}] ❌ Error opening serial connection: {e}\n")
