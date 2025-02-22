@@ -14,11 +14,7 @@ Multi-Selection for Sending Commands
 
 Real-Time Serial Communication Logging
 
-Save Logs as JSON or CSV
-
-Hotkeys for Quick Operations
-
-UI-Freezing Prevention with Background Threads
+Save Logs as JSON
 
 ## 🛠️ Installation
 
