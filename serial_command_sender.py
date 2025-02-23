@@ -45,17 +45,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import QTimer
-
-class RefreshableComboBox(QComboBox):
-    def __init__(self, main_window):
-        super().__init__()
-        self.main_window = main_window  # Store reference to main window
-
-    def showPopup(self):
-        """Refresh COM port list only when the dropdown is clicked."""
-        self.main_window.refresh_com_ports()  # Use main window's method
-        super().showPopup()
-    
+  
 class SerialCommandSender(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -73,9 +63,13 @@ class SerialCommandSender(QMainWindow):
         self.port_label = QLabel("Select COM Port:")
         top_layout.addWidget(self.port_label)
         
-        self.com_port_combo = RefreshableComboBox(self)
+        #self.com_port_combo = RefreshableComboBox(self)
+        #top_layout.addWidget(self.com_port_combo)
+        #self.refresh_com_ports()
+
+        self.com_port_combo = QComboBox()
         top_layout.addWidget(self.com_port_combo)
-        self.refresh_com_ports()
+        self.com_port_combo.showPopup = self.refresh_com_ports_then_show_popup
 
         self.baud_label = QLabel("Select Baud Rate:")
         top_layout.addWidget(self.baud_label)
@@ -146,6 +140,11 @@ class SerialCommandSender(QMainWindow):
         self.log_data = []
         self.check_connection_timer = QTimer()
         self.check_connection_timer.timeout.connect(self.check_connection)
+
+    def refresh_com_ports_then_show_popup(self):
+        """Refresh COM port list before showing dropdown."""
+        self.refresh_com_ports()
+        QComboBox.showPopup(self.com_port_combo)
 
     def toggle_echo(self):
         """Toggles the echo mode on/off."""
