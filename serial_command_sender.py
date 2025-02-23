@@ -63,10 +63,6 @@ class SerialCommandSender(QMainWindow):
         self.port_label = QLabel("Select COM Port:")
         top_layout.addWidget(self.port_label)
         
-        #self.com_port_combo = RefreshableComboBox(self)
-        #top_layout.addWidget(self.com_port_combo)
-        #self.refresh_com_ports()
-
         self.com_port_combo = QComboBox()
         top_layout.addWidget(self.com_port_combo)
         self.com_port_combo.showPopup = self.refresh_com_ports_then_show_popup
@@ -202,7 +198,7 @@ class SerialCommandSender(QMainWindow):
         if self.serial_connection and self.serial_connection.is_open:
             start_time = time.time()  # Start timing
             try:
-                self.serial_connection.write((command + "\r\n").encode())
+                self.serial_connection.write((command).encode())
                 response = self.serial_connection.read(self.serial_connection.in_waiting).decode().strip()
                 elapsed_time = time.time() - start_time  # Calculate elapsed time
                 self.response_area.append(f"[{self.timestamp()}] > {command} (Took {elapsed_time:.3f} sec)\nResponse: {response}\n")
